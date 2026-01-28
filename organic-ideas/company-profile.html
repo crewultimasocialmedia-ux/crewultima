@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #000000;
+            padding: 30px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="url"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000000;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus,
+        input[type="url"]:focus,
+        select:focus {
+            outline: none;
+            border: 2px solid #000000;
+            background-color: #f0f0f0;
+        }
+        button {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 12px 30px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SECTION A: CLIENT COMPANY PROFILE</h1>
+        <form>
+            <div class="form-group">
+                <label for="companyName">Company Name *</label>
+                <input type="text" id="companyName" name="companyName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contactPerson">Contact Person Name *</label>
+                <input type="text" id="contactPerson" name="contactPerson" required>
+            </div>
+
+            <div class="form-group">
+                <label for="designation">Designation *</label>
+                <input type="text" id="designation" name="designation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number *</label>
+                <input type="text" id="mobile" name="mobile" required>
+            </div>
+
+            <div class="form-group">
+                <label for="website">Website URL</label>
+                <input type="url" id="website" name="website">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Business Address *</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="yearEstablished">Year of Establishment *</label>
+                <input type="number" id="yearEstablished" name="yearEstablished" required>
+            </div>
+
+            <div class="form-group">
+                <label for="businessModel">Business Model *</label>
+                <select id="businessModel" name="businessModel" required>
+                    <option value="">-- Select --</option>
+                    <option value="b2b">B2B</option>
+                    <option value="b2c">B2C</option>
+                    <option value="d2c">D2C</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="industry">Primary Industry *</label>
+                <select id="industry" name="industry" required>
+                    <option value="">-- Select --</option>
+                    <option value="homeDecor">Home Decor</option>
+                    <option value="retail">Retail</option>
+                    <option value="fashion">Fashion</option>
+                    <option value="fmcg">FMCG</option>
+                    <option value="realEstate">Real Estate</option>
+                    <option value="manufacturing">Manufacturing</option>
+                    <option value="it">IT Services</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="education">Education</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="categories">Product/Service Categories *</label>
+                <input type="text" id="categories" name="categories" placeholder="Comma separated values" required>
+            </div>
+
+            <div class="form-group">
+                <label for="revenue">Annual Revenue Bracket *</label>
+                <select id="revenue" name="revenue" required>
+                    <option value="">-- Select --</option>
+                    <option value="<1cr">Less than ₹1 Cr</option>
+                    <option value="1-5cr">₹1–5 Cr</option>
+                    <option value="5-10cr">₹5–10 Cr</option>
+                    <option value="10-25cr">₹10–25 Cr</option>
+                    <option value="25-50cr">₹25–50 Cr</option>
+                    <option value=">50cr">More than ₹50 Cr</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="locations">Operating Locations *</label>
+                <input type="text" id="locations" name="locations" placeholder="Comma separated values" required>
+            </div>
+
+            <div class="form-group">
+                <label for="logo">Upload Logo</label>
+                <input type="file" id="logo" name="logo">
+            </div>
+
+            <div class="form-group">
+                <label for="guidelines">Upload Brand Guidelines</label>
+                <input type="file" id="guidelines" name="guidelines">
+            </div>
+
+            <div class="form-group">
+                <label for="brochures">Upload Sample Brochures</label>
+                <input type="file" id="brochures" name="brochures">
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

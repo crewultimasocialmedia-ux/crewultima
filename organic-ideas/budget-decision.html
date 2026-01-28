@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Decision</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #000000;
+            padding: 30px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000000;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border: 2px solid #000000;
+            background-color: #f0f0f0;
+        }
+        button {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 12px 30px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SECTION F: BUDGET, TIMELINE & DECISION-MAKING</h1>
+        <form>
+            <div class="form-group">
+                <label for="marketingBudget">Monthly Marketing Budget (Ad Spend) *</label>
+                <select id="marketingBudget" name="marketingBudget" required>
+                    <option value="">-- Select --</option>
+                    <option value="<25k">Less than ₹25k</option>
+                    <option value="25-50k">₹25–50k</option>
+                    <option value="50-1l">₹50–1L</option>
+                    <option value="1-1.5l">₹1–1.5L</option>
+                    <option value="1.5-3l">₹1.5–3L</option>
+                    <option value=">3l">More than ₹3L</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="creativeBudget">Monthly Creative Budget *</label>
+                <select id="creativeBudget" name="creativeBudget" required>
+                    <option value="">-- Select --</option>
+                    <option value="<20k">Less than ₹20k</option>
+                    <option value="20-40k">₹20–40k</option>
+                    <option value="40-60k">₹40–60k</option>
+                    <option value="60-1l">₹60–1L</option>
+                    <option value=">1l">More than ₹1L</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="budgetFlexibility">Budget Flexibility *</label>
+                <select id="budgetFlexibility" name="budgetFlexibility" required>
+                    <option value="">-- Select --</option>
+                    <option value="fixed">Fixed</option>
+                    <option value="flexible">Flexible</option>
+                    <option value="proposal">Need Proposal</option>
+                    <option value="notdecided">Not Decided</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="billingMethod">Preferred Billing Method *</label>
+                <select id="billingMethod" name="billingMethod" required>
+                    <option value="">-- Select --</option>
+                    <option value="retainer">Monthly Retainer</option>
+                    <option value="projectbased">Project-Based</option>
+                    <option value="hybrid">Hybrid</option>
+                    <option value="hourly">Hourly</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">Expected Start Date *</label>
+                <input type="date" id="startDate" name="startDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="urgencyLevel">Urgency Level *</label>
+                <select id="urgencyLevel" name="urgencyLevel" required>
+                    <option value="">-- Select --</option>
+                    <option value="immediate">Immediate</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="decisionMaker">Final Decision Maker *</label>
+                <input type="text" id="decisionMaker" name="decisionMaker" required>
+            </div>
+
+            <div class="form-group">
+                <label for="stakeholders">Other Stakeholders *</label>
+                <input type="text" id="stakeholders" name="stakeholders" placeholder="Comma separated names" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

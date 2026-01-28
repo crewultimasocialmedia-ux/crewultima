@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Insights</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid #000000;
+            padding: 30px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #000000;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border: 2px solid #000000;
+            background-color: #f0f0f0;
+        }
+        button {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 12px 30px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #333333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SECTION B: UNDERSTANDING THE CLIENT BUSINESS</h1>
+        <form>
+            <div class="form-group">
+                <label for="positioning">How do you describe your market positioning? *</label>
+                <select id="positioning" name="positioning" required>
+                    <option value="">-- Select --</option>
+                    <option value="premium">Premium</option>
+                    <option value="midmarket">Mid-Market</option>
+                    <option value="budget">Budget</option>
+                    <option value="mass">Mass Market</option>
+                    <option value="notsure">Not Sure</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="idealCustomer">Who is your ideal customer? *</label>
+                <textarea id="idealCustomer" name="idealCustomer" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="geographies">Target Geographies *</label>
+                <input type="text" id="geographies" name="geographies" placeholder="Comma separated values" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ageGroup">Target Age Group *</label>
+                <select id="ageGroup" name="ageGroup" required>
+                    <option value="">-- Select --</option>
+                    <option value="18-25">18–25</option>
+                    <option value="25-35">25–35</option>
+                    <option value="30-45">30–45</option>
+                    <option value="40-60">40–60</option>
+                    <option value="all">All Adults</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="competitors">Who are your top competitors? *</label>
+                <textarea id="competitors" name="competitors" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="differentiation">What makes your business different? *</label>
+                <textarea id="differentiation" name="differentiation" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="shortTermGoals">Short-term business goals (3–6 months) *</label>
+                <textarea id="shortTermGoals" name="shortTermGoals" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="longTermGoals">Long-term business goals (1–3 years) *</label>
+                <textarea id="longTermGoals" name="longTermGoals" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="kpis">Key KPIs you track *</label>
+                <input type="text" id="kpis" name="kpis" placeholder="Comma separated values" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

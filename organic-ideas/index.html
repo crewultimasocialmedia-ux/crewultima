@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Probing Questionnaire</title>
+    <!-- EmailJS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #000;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border: 1px solid #000;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #000;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group input[type="date"],
+        .form-group input[type="file"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #999;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checkbox-group label,
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"],
+        .radio-group input[type="radio"] {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .rating-scale {
+            display: flex;
+            gap: 10px;
+        }
+
+        .rating-scale input[type="radio"] {
+            display: none;
+        }
+
+        .rating-scale label {
+            border: 1px solid #999;
+            padding: 8px 12px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: normal;
+            width: 40px;
+        }
+
+        .rating-scale input[type="radio"]:checked + label {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .form-helper-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid #000;
+            background-color: #fff;
+            color: #000;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #333;
+        }
+
+        .review-section {
+            margin-bottom: 30px;
+            border: 1px solid #000;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .review-section-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #000;
+            padding-bottom: 8px;
+        }
+
+        .review-item {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .review-item-label {
+            font-weight: bold;
+            padding-right: 15px;
+        }
+
+        .review-item-value {
+            word-break: break-word;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .required {
+            color: #d32f2f;
+        }
+
+        .section-indicator {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Client Probing Questionnaire</h1>
+            <div class="section-indicator">
+                <span id="current-section-text">Section A: Client Company Profile</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <form id="mainForm">
+            <!-- SECTION A: CLIENT COMPANY PROFILE -->
+            <div class="section active" id="section-a" data-section="A">
+                <div class="section-title">Section A: Client Company Profile</div>
+
+                <div class="form-group">
+                    <label>Company Name <span class="required">*</span></label>
+                    <input type="text" name="a_company_name" placeholder="e.g., UrbanLeaf Home Decor Pvt. Ltd." >
+                </div>
+
+                <div class="form-group">
+                    <label>Contact Person Name <span class="required">*</span></label>
+                    <input type="text" name="a_contact_person" placeholder="e.g., Ramesh Mehta" >
+                </div>
+
+                <div class="form-group">
+                    <label>Designation <span class="required">*</span></label>
+                    <input type="text" name="a_designation" placeholder="e.g., Managing Director" >
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address <span class="required">*</span></label>
+                    <input type="email" name="a_email" placeholder="e.g., ramesh@urbanleafdecor.com" >
+                </div>
+
+                <div class="form-group">
+                    <label>Mobile Number <span class="required">*</span></label>
+                    <input type="text" name="a_mobile" placeholder="e.g., +91 98765 22110" >
+                </div>
+
+                <div class="form-group">
+                    <label>Website URL</label>
+                    <input type="text" name="a_website" placeholder="e.g., www.urbanleafdecor.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Business Address <span class="required">*</span></label>
+                    <input type="text" name="a_address" placeholder="e.g., Ahmedabad, Gujarat" >
+                </div>
+
+                <div class="form-group">
+                    <label>Year of Establishment <span class="required">*</span></label>
+                    <input type="number" name="a_year" placeholder="e.g., 2017" >
+                </div>
+
+                <div class="form-group">
+                    <label>Business Model <span class="required">*</span></label>
+                    <select name="a_business_model" >
+                        <option value="">-- Select --</option>
+                        <option value="B2B">B2B</option>
+                        <option value="B2C">B2C</option>
+                        <option value="D2C">D2C</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Primary Industry <span class="required">*</span></label>
+                    <select name="a_primary_industry" >
+                        <option value="">-- Select --</option>
+                        <option value="Home Decor">Home Decor</option>
+                        <option value="Retail">Retail</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="FMCG">FMCG</option>
+                        <option value="Real Estate">Real Estate</option>
+                        <option value="Manufacturing">Manufacturing</option>
+                        <option value="IT Services">IT Services</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Education">Education</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Product/Service Categories <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="a_categories" value="Curtains"> Curtains</label>
+                        <label><input type="checkbox" name="a_categories" value="Wallpapers"> Wallpapers</label>
+                        <label><input type="checkbox" name="a_categories" value="Upholstery"> Upholstery</label>
+                        <label><input type="checkbox" name="a_categories" value="Furniture"> Furniture</label>
+                        <label><input type="checkbox" name="a_categories" value="Home Decor"> Home Decor</label>
+                        <label><input type="checkbox" name="a_categories" value="Modular"> Modular</label>
+                        <label><input type="checkbox" name="a_categories" value="Lighting"> Lighting</label>
+                        <label><input type="checkbox" name="a_categories" value="Kitchen Accessories"> Kitchen Accessories</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Annual Revenue Bracket <span class="required">*</span></label>
+                    <select name="a_revenue_bracket" >
+                        <option value="">-- Select --</option>
+                        <option value="<₹1 Cr"><₹1 Cr</option>
+                        <option value="₹1–5 Cr">₹1–5 Cr</option>
+                        <option value="₹5–10 Cr">₹5–10 Cr</option>
+                        <option value="₹10–25 Cr">₹10–25 Cr</option>
+                        <option value="₹25–50 Cr">₹25–50 Cr</option>
+                        <option value=">₹50 Cr">>₹50 Cr</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Operating Locations</label>
+                    <input type="text" name="a_operating_locations" placeholder="e.g., Ahmedabad, Baroda, Surat">
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Logo</label>
+                    <input type="file" name="a_logo" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Brand Guidelines</label>
+                    <input type="file" name="a_brand_guidelines">
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Sample Brochures</label>
+                    <input type="file" name="a_sample_brochures">
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()" disabled>← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Next →</button>
+                </div>
+            </div>
+
+            <!-- SECTION B: UNDERSTANDING THE CLIENT BUSINESS -->
+            <div class="section" id="section-b" data-section="B">
+                <div class="section-title">Section B: Understanding The Client Business</div>
+
+                <div class="form-group">
+                    <label>How do you describe your market positioning? <span class="required">*</span></label>
+                    <select name="b_market_positioning" >
+                        <option value="">-- Select --</option>
+                        <option value="Premium">Premium</option>
+                        <option value="Mid-Market">Mid-Market</option>
+                        <option value="Budget">Budget</option>
+                        <option value="Mass Market">Mass Market</option>
+                        <option value="Not Sure">Not Sure</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Who is your ideal customer? <span class="required">*</span></label>
+                    <textarea name="b_ideal_customer" placeholder="e.g., Modern homeowners, architects, interior designers" ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Geographies? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="b_target_geographies" value="Local City"> Local City</label>
+                        <label><input type="checkbox" name="b_target_geographies" value="State-wide"> State-wide</label>
+                        <label><input type="checkbox" name="b_target_geographies" value="Regional"> Regional</label>
+                        <label><input type="checkbox" name="b_target_geographies" value="PAN India"> PAN India</label>
+                        <label><input type="checkbox" name="b_target_geographies" value="International"> International</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Target Age Group? <span class="required">*</span></label>
+                    <select name="b_target_age_group" >
+                        <option value="">-- Select --</option>
+                        <option value="18–25">18–25</option>
+                        <option value="25–35">25–35</option>
+                        <option value="30–45">30–45</option>
+                        <option value="40–60">40–60</option>
+                        <option value="All Adults">All Adults</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Who are your top competitors? <span class="required">*</span></label>
+                    <textarea name="b_top_competitors" placeholder="e.g., D'Decor, Marshalls Wallpapers" ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>What makes your business different? <span class="required">*</span></label>
+                    <textarea name="b_differentiator" placeholder="e.g., Imported designs & fast delivery" ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Short-term business goals (3–6 months)? <span class="required">*</span></label>
+                    <textarea name="b_short_term_goals" placeholder="e.g., Increase showroom footfall" ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Long-term business goals (1–3 years)? <span class="required">*</span></label>
+                    <textarea name="b_long_term_goals" placeholder="e.g., Expand to 10 states" ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Key KPIs you track? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="b_kpis" value="Leads"> Leads</label>
+                        <label><input type="checkbox" name="b_kpis" value="Conversion Rate"> Conversion Rate</label>
+                        <label><input type="checkbox" name="b_kpis" value="Revenue"> Revenue</label>
+                        <label><input type="checkbox" name="b_kpis" value="ROAS"> ROAS</label>
+                        <label><input type="checkbox" name="b_kpis" value="Footfall"> Footfall</label>
+                        <label><input type="checkbox" name="b_kpis" value="Engagement"> Engagement</label>
+                        <label><input type="checkbox" name="b_kpis" value="Website Traffic"> Website Traffic</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Next →</button>
+                </div>
+            </div>
+
+            <!-- SECTION C: CLIENT PAIN POINT DIAGNOSIS -->
+            <div class="section" id="section-c" data-section="C">
+                <div class="section-title">Section C: Client Pain Point Diagnosis</div>
+
+                <div class="form-group">
+                    <label>Branding consistency challenge (1–5)? <span class="required">*</span></label>
+                    <div class="rating-scale">
+                        <input type="radio" id="c_branding_1" name="c_branding_challenge" value="1" >
+                        <label for="c_branding_1">1</label>
+                        <input type="radio" id="c_branding_2" name="c_branding_challenge" value="2">
+                        <label for="c_branding_2">2</label>
+                        <input type="radio" id="c_branding_3" name="c_branding_challenge" value="3">
+                        <label for="c_branding_3">3</label>
+                        <input type="radio" id="c_branding_4" name="c_branding_challenge" value="4">
+                        <label for="c_branding_4">4</label>
+                        <input type="radio" id="c_branding_5" name="c_branding_challenge" value="5">
+                        <label for="c_branding_5">5</label>
+                    </div>
+                    <div class="form-helper-text">1 = No Issue, 5 = Major Issue</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Difficulty reaching target audience (1–5)? <span class="required">*</span></label>
+                    <div class="rating-scale">
+                        <input type="radio" id="c_reach_1" name="c_reach_challenge" value="1" >
+                        <label for="c_reach_1">1</label>
+                        <input type="radio" id="c_reach_2" name="c_reach_challenge" value="2">
+                        <label for="c_reach_2">2</label>
+                        <input type="radio" id="c_reach_3" name="c_reach_challenge" value="3">
+                        <label for="c_reach_3">3</label>
+                        <input type="radio" id="c_reach_4" name="c_reach_challenge" value="4">
+                        <label for="c_reach_4">4</label>
+                        <input type="radio" id="c_reach_5" name="c_reach_challenge" value="5">
+                        <label for="c_reach_5">5</label>
+                    </div>
+                    <div class="form-helper-text">1 = No Issue, 5 = Major Issue</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Low lead quality challenge (1–5)? <span class="required">*</span></label>
+                    <div class="rating-scale">
+                        <input type="radio" id="c_quality_1" name="c_quality_challenge" value="1" >
+                        <label for="c_quality_1">1</label>
+                        <input type="radio" id="c_quality_2" name="c_quality_challenge" value="2">
+                        <label for="c_quality_2">2</label>
+                        <input type="radio" id="c_quality_3" name="c_quality_challenge" value="3">
+                        <label for="c_quality_3">3</label>
+                        <input type="radio" id="c_quality_4" name="c_quality_challenge" value="4">
+                        <label for="c_quality_4">4</label>
+                        <input type="radio" id="c_quality_5" name="c_quality_challenge" value="5">
+                        <label for="c_quality_5">5</label>
+                    </div>
+                    <div class="form-helper-text">1 = No Issue, 5 = Major Issue</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Poor conversion rates (1–5)? <span class="required">*</span></label>
+                    <div class="rating-scale">
+                        <input type="radio" id="c_conversion_1" name="c_conversion_challenge" value="1" >
+                        <label for="c_conversion_1">1</label>
+                        <input type="radio" id="c_conversion_2" name="c_conversion_challenge" value="2">
+                        <label for="c_conversion_2">2</label>
+                        <input type="radio" id="c_conversion_3" name="c_conversion_challenge" value="3">
+                        <label for="c_conversion_3">3</label>
+                        <input type="radio" id="c_conversion_4" name="c_conversion_challenge" value="4">
+                        <label for="c_conversion_4">4</label>
+                        <input type="radio" id="c_conversion_5" name="c_conversion_challenge" value="5">
+                        <label for="c_conversion_5">5</label>
+                    </div>
+                    <div class="form-helper-text">1 = No Issue, 5 = Major Issue</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you face content creation delays? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="c_content_delays" value="Yes" > Yes</label>
+                        <label><input type="radio" name="c_content_delays" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you face approval bottlenecks? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="c_approval_bottlenecks" value="Yes" > Yes</label>
+                        <label><input type="radio" name="c_approval_bottlenecks" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you lack skilled marketing resources? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="c_lack_resources" value="Yes" > Yes</label>
+                        <label><input type="radio" name="c_lack_resources" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Describe workflow issues</label>
+                    <textarea name="c_workflow_issues" placeholder="e.g., No content calendar"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Which digital channels are underperforming? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="c_underperforming_channels" value="Website"> Website</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="SEO"> SEO</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="Instagram Ads"> Instagram Ads</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="Meta Ads"> Meta Ads</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="Google Ads"> Google Ads</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="YouTube"> YouTube</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="Email Marketing"> Email Marketing</label>
+                        <label><input type="checkbox" name="c_underperforming_channels" value="WhatsApp Marketing"> WhatsApp Marketing</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Which analytics tools do you use? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="c_analytics_tools" value="Google Analytics"> Google Analytics</label>
+                        <label><input type="checkbox" name="c_analytics_tools" value="Meta Insights"> Meta Insights</label>
+                        <label><input type="checkbox" name="c_analytics_tools" value="CRM dashboards"> CRM dashboards</label>
+                        <label><input type="checkbox" name="c_analytics_tools" value="Search Console"> Search Console</label>
+                        <label><input type="checkbox" name="c_analytics_tools" value="None"> None</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Current lead generation sources? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="c_lead_sources" value="Google Search"> Google Search</label>
+                        <label><input type="checkbox" name="c_lead_sources" value="Social Media"> Social Media</label>
+                        <label><input type="checkbox" name="c_lead_sources" value="Paid Ads"> Paid Ads</label>
+                        <label><input type="checkbox" name="c_lead_sources" value="Referrals"> Referrals</label>
+                        <label><input type="checkbox" name="c_lead_sources" value="Offline Events"> Offline Events</label>
+                        <label><input type="checkbox" name="c_lead_sources" value="Telecalling"> Telecalling</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly inbound leads? <span class="required">*</span></label>
+                    <input type="number" name="c_monthly_leads" placeholder="e.g., 120" >
+                </div>
+
+                <div class="form-group">
+                    <label>Conversion rate? (in %)</label>
+                    <input type="number" name="c_conversion_rate" placeholder="e.g., 8">
+                </div>
+
+                <div class="form-group">
+                    <label>Customer retention challenges?</label>
+                    <textarea name="c_retention_challenges" placeholder="e.g., No structured follow-up"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Next →</button>
+                </div>
+            </div>
+
+            <!-- SECTION D: CURRENT MARKETING & CREATIVE ENGAGEMENT -->
+            <div class="section" id="section-d" data-section="D">
+                <div class="section-title">Section D: Current Marketing & Creative Engagement</div>
+
+                <div class="form-group">
+                    <label>Are you currently working with an agency? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="d_agency" value="Yes" > Yes</label>
+                        <label><input type="radio" name="d_agency" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>What services are outsourced? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="d_services" value="Branding"> Branding</label>
+                        <label><input type="checkbox" name="d_services" value="Social Media"> Social Media</label>
+                        <label><input type="checkbox" name="d_services" value="Website"> Website</label>
+                        <label><input type="checkbox" name="d_services" value="SEO"> SEO</label>
+                        <label><input type="checkbox" name="d_services" value="Ads"> Ads</label>
+                        <label><input type="checkbox" name="d_services" value="Content"> Content</label>
+                        <label><input type="checkbox" name="d_services" value="None"> None</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Expectations from marketing partner? <span class="required">*</span></label>
+                    <textarea name="d_expectations" placeholder="e.g., Branding + Lead generation" ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Website URL</label>
+                    <input type="text" name="d_website" placeholder="e.g., www.urbanleafdecor.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Social media profile links</label>
+                    <textarea name="d_social_profiles" placeholder="e.g., instagram.com/urbanleafdecor"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Which ad accounts are connected? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="d_ad_accounts" value="Google Ads"> Google Ads</label>
+                        <label><input type="checkbox" name="d_ad_accounts" value="Meta Ads"> Meta Ads</label>
+                        <label><input type="checkbox" name="d_ad_accounts" value="LinkedIn Ads"> LinkedIn Ads</label>
+                        <label><input type="checkbox" name="d_ad_accounts" value="None"> None</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Upload past campaign files</label>
+                    <input type="file" name="d_campaign_files">
+                </div>
+
+                <div class="form-group">
+                    <label>Recurring creative requirements? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="d_creative_requirements" value="Social Media Posts"> Social Media Posts</label>
+                        <label><input type="checkbox" name="d_creative_requirements" value="Reels"> Reels</label>
+                        <label><input type="checkbox" name="d_creative_requirements" value="Videos"> Videos</label>
+                        <label><input type="checkbox" name="d_creative_requirements" value="Catalogs"> Catalogs</label>
+                        <label><input type="checkbox" name="d_creative_requirements" value="Packaging"> Packaging</label>
+                        <label><input type="checkbox" name="d_creative_requirements" value="Website Banners"> Website Banners</label>
+                        <label><input type="checkbox" name="d_creative_requirements" value="Ads Creatives"> Ads Creatives</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly creative volume? <span class="required">*</span></label>
+                    <select name="d_creative_volume" >
+                        <option value="">-- Select --</option>
+                        <option value="10–15">10–15</option>
+                        <option value="15–20">15–20</option>
+                        <option value="20–30">20–30</option>
+                        <option value="30–50">30–50</option>
+                        <option value="50+">50+</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Next →</button>
+                </div>
+            </div>
+
+            <!-- SECTION E: ENGAGEMENT OPPORTUNITIES -->
+            <div class="section" id="section-e" data-section="E">
+                <div class="section-title">Section E: Engagement Opportunities</div>
+
+                <div class="form-group">
+                    <label>Do you have a documented marketing strategy? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="e_documented_strategy" value="Yes" > Yes</label>
+                        <label><input type="radio" name="e_documented_strategy" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Do you have a sales funnel? <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="e_sales_funnel" value="Yes" > Yes</label>
+                        <label><input type="radio" name="e_sales_funnel" value="No"> No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Automation Level? (1–5) <span class="required">*</span></label>
+                    <div class="rating-scale">
+                        <input type="radio" id="e_automation_1" name="e_automation_level" value="1" >
+                        <label for="e_automation_1">1</label>
+                        <input type="radio" id="e_automation_2" name="e_automation_level" value="2">
+                        <label for="e_automation_2">2</label>
+                        <input type="radio" id="e_automation_3" name="e_automation_level" value="3">
+                        <label for="e_automation_3">3</label>
+                        <input type="radio" id="e_automation_4" name="e_automation_level" value="4">
+                        <label for="e_automation_4">4</label>
+                        <input type="radio" id="e_automation_5" name="e_automation_level" value="5">
+                        <label for="e_automation_5">5</label>
+                    </div>
+                    <div class="form-helper-text">1 = Low, 5 = High</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Identify branding gaps</label>
+                    <textarea name="e_branding_gaps" placeholder="e.g., No brand personality"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Identify communication gaps</label>
+                    <textarea name="e_communication_gaps" placeholder="e.g., Inconsistent posting"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Identify digital gaps</label>
+                    <textarea name="e_digital_gaps" placeholder="e.g., No SEO, no retargeting funnel"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Immediate improvement areas <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="e_improvement_areas" value="Website Revamp"> Website Revamp</label>
+                        <label><input type="checkbox" name="e_improvement_areas" value="SEO"> SEO</label>
+                        <label><input type="checkbox" name="e_improvement_areas" value="Ads"> Ads</label>
+                        <label><input type="checkbox" name="e_improvement_areas" value="Social Media"> Social Media</label>
+                        <label><input type="checkbox" name="e_improvement_areas" value="Rebranding"> Rebranding</label>
+                        <label><input type="checkbox" name="e_improvement_areas" value="CRM"> CRM</label>
+                        <label><input type="checkbox" name="e_improvement_areas" value="Automation"> Automation</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Interested in add-on services? <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="e_addon_services" value="Photoshoot"> Photoshoot</label>
+                        <label><input type="checkbox" name="e_addon_services" value="Video Ads"> Video Ads</label>
+                        <label><input type="checkbox" name="e_addon_services" value="Catalog Design"> Catalog Design</label>
+                        <label><input type="checkbox" name="e_addon_services" value="Influencer Marketing"> Influencer Marketing</label>
+                        <label><input type="checkbox" name="e_addon_services" value="Monthly Retainer"> Monthly Retainer</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Next →</button>
+                </div>
+            </div>
+
+            <!-- SECTION F: BUDGET, TIMELINE & DECISION-MAKING -->
+            <div class="section" id="section-f" data-section="F">
+                <div class="section-title">Section F: Budget, Timeline & Decision-Making</div>
+
+                <div class="form-group">
+                    <label>Monthly Marketing Budget (Ad Spend) <span class="required">*</span></label>
+                    <select name="f_marketing_budget" >
+                        <option value="">-- Select --</option>
+                        <option value="<₹25k"><₹25k</option>
+                        <option value="₹25–50k">₹25–50k</option>
+                        <option value="₹50–1L">₹50–1L</option>
+                        <option value="₹1–1.5L">₹1–1.5L</option>
+                        <option value="₹1.5–3L">₹1.5–3L</option>
+                        <option value=">₹3L">>₹3L</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly Creative Budget <span class="required">*</span></label>
+                    <select name="f_creative_budget" >
+                        <option value="">-- Select --</option>
+                        <option value="<₹20k"><₹20k</option>
+                        <option value="₹20–40k">₹20–40k</option>
+                        <option value="₹40–60k">₹40–60k</option>
+                        <option value="₹60–1L">₹60–1L</option>
+                        <option value=">₹1L">>₹1L</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget Flexibility <span class="required">*</span></label>
+                    <select name="f_budget_flexibility" >
+                        <option value="">-- Select --</option>
+                        <option value="Fixed">Fixed</option>
+                        <option value="Flexible">Flexible</option>
+                        <option value="Need Proposal">Need Proposal</option>
+                        <option value="Not Decided">Not Decided</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Preferred Billing Method <span class="required">*</span></label>
+                    <select name="f_billing_method" >
+                        <option value="">-- Select --</option>
+                        <option value="Monthly Retainer">Monthly Retainer</option>
+                        <option value="Project-Based">Project-Based</option>
+                        <option value="Hybrid">Hybrid</option>
+                        <option value="Hourly">Hourly</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Expected Start Date <span class="required">*</span></label>
+                    <input type="date" name="f_start_date" >
+                </div>
+
+                <div class="form-group">
+                    <label>Urgency Level <span class="required">*</span></label>
+                    <select name="f_urgency_level" >
+                        <option value="">-- Select --</option>
+                        <option value="Immediate">Immediate</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Final Decision Maker <span class="required">*</span></label>
+                    <input type="text" name="f_decision_maker" placeholder="e.g., Ramesh Mehta" >
+                </div>
+
+                <div class="form-group">
+                    <label>Other Stakeholders</label>
+                    <textarea name="f_stakeholders" placeholder="e.g., Marketing Manager, Finance Head"></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Next →</button>
+                </div>
+            </div>
+
+            <!-- SECTION G: INTERNAL NOTES & FOLLOW-UP -->
+            <div class="section" id="section-g" data-section="G">
+                <div class="section-title">Section G: Internal Notes & Follow-Up</div>
+
+                <div class="form-group">
+                    <label>Internal consultant notes</label>
+                    <textarea name="g_internal_notes" placeholder="e.g., High potential client"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Lead qualification score (0–100) <span class="required">*</span></label>
+                    <input type="number" name="g_qualification_score" min="0" max="100" placeholder="e.g., 82" >
+                </div>
+
+                <div class="form-group">
+                    <label>Next actions <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="g_next_actions" value="Proposal"> Proposal</label>
+                        <label><input type="checkbox" name="g_next_actions" value="Strategy Call"> Strategy Call</label>
+                        <label><input type="checkbox" name="g_next_actions" value="Demo"> Demo</label>
+                        <label><input type="checkbox" name="g_next_actions" value="Onboarding"> Onboarding</label>
+                        <label><input type="checkbox" name="g_next_actions" value="Budget Approval"> Budget Approval</label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back</button>
+                    <button type="button" class="btn-next" onclick="nextSection()">Review & Submit</button>
+                </div>
+            </div>
+
+            <!-- REVIEW & SUBMIT SECTION -->
+            <div class="section" id="section-review" data-section="REVIEW">
+                <div class="section-title">Review & Submit Your Responses</div>
+                <p style="margin-bottom: 20px; font-style: italic; color: #666;">Please review all your entries below before final submission.</p>
+
+                <div id="review-content"></div>
+
+                <div class="button-group" style="margin-top: 30px;">
+                    <button type="button" class="btn-back" onclick="previousSection()">← Back to Edit</button>
+                    <button type="submit" class="btn-primary">Submit Form ✓</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.section');
+        const totalSections = sections.length - 1; // Excluding review section
+        const form = document.getElementById('mainForm');
+
+        // Initialize
+        updateProgress();
+        attachBackButtonListeners();
+
+        function nextSection() {
+            if (validateCurrentSection()) {
+                saveFormData();
+                if (currentSection < totalSections) {
+                    currentSection++;
+                    if (currentSection === totalSections) {
+                        // Go to review
+                        currentSection++;
+                        generateReview();
+                    }
+                } else {
+                    generateReview();
+                }
+                updateProgress();
+                scrollToTop();
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                updateProgress();
+                scrollToTop();
+            }
+        }
+
+        function scrollToTop() {
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updateProgress() {
+            // Hide all sections
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Show current section
+            if (currentSection < sections.length) {
+                sections[currentSection].classList.add('active');
+            }
+
+            // Update progress bar
+            const progress = ((currentSection) / totalSections) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+
+            // Update section indicator
+            const sectionData = sections[currentSection]?.getAttribute('data-section');
+            const sectionTitles = {
+                'A': 'Section A: Client Company Profile',
+                'B': 'Section B: Understanding The Client Business',
+                'C': 'Section C: Client Pain Point Diagnosis',
+                'D': 'Section D: Current Marketing & Creative Engagement',
+                'E': 'Section E: Engagement Opportunities',
+                'F': 'Section F: Budget, Timeline & Decision-Making',
+                'G': 'Section G: Internal Notes & Follow-Up',
+                'REVIEW': 'Review & Submit Your Responses'
+            };
+            document.getElementById('current-section-text').innerText = sectionTitles[sectionData] || '';
+
+            // Update back button state
+            document.querySelector('.btn-back').disabled = currentSection === 0;
+        }
+
+        function validateCurrentSection() {
+            const currentForm = sections[currentSection];
+            const requiredFields = currentForm.querySelectorAll('[required]');
+            let isValid = true;
+
+            // Clear previous error messages
+            currentForm.querySelectorAll('.error-message').forEach(el => el.remove());
+
+            requiredFields.forEach(field => {
+                let hasValue = false;
+
+                if (field.type === 'checkbox' || field.type === 'radio') {
+                    const name = field.name;
+                    const checkedFields = currentForm.querySelectorAll(`[name="${name}"]:checked`);
+                    hasValue = checkedFields.length > 0;
+                } else {
+                    hasValue = field.value.trim() !== '';
+                }
+
+                if (!hasValue) {
+                    isValid = false;
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'error-message';
+                    errorDiv.innerText = '⚠ This field is required';
+
+                    if (field.type === 'checkbox' || field.type === 'radio') {
+                        const group = currentForm.querySelector(`[name="${field.name}"]`).closest('.checkbox-group, .radio-group, .form-group');
+                        group.appendChild(errorDiv);
+                    } else {
+                        field.parentNode.appendChild(errorDiv);
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        function saveFormData() {
+            // Form data is automatically handled by FormData
+        }
+
+        function generateReview() {
+            const reviewContent = document.getElementById('review-content');
+            reviewContent.innerHTML = '';
+
+            const formData = new FormData(form);
+            const data = {};
+
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            const sectionLabels = {
+                'a': 'SECTION A: CLIENT COMPANY PROFILE',
+                'b': 'SECTION B: UNDERSTANDING THE CLIENT BUSINESS',
+                'c': 'SECTION C: CLIENT PAIN POINT DIAGNOSIS',
+                'd': 'SECTION D: CURRENT MARKETING & CREATIVE ENGAGEMENT',
+                'e': 'SECTION E: ENGAGEMENT OPPORTUNITIES',
+                'f': 'SECTION F: BUDGET, TIMELINE & DECISION-MAKING',
+                'g': 'SECTION G: INTERNAL NOTES & FOLLOW-UP'
+            };
+
+            const fieldLabels = {
+                // Section A
+                'a_company_name': 'Company Name',
+                'a_contact_person': 'Contact Person Name',
+                'a_designation': 'Designation',
+                'a_email': 'Email Address',
+                'a_mobile': 'Mobile Number',
+                'a_website': 'Website URL',
+                'a_address': 'Business Address',
+                'a_year': 'Year of Establishment',
+                'a_business_model': 'Business Model',
+                'a_primary_industry': 'Primary Industry',
+                'a_categories': 'Product/Service Categories',
+                'a_revenue_bracket': 'Annual Revenue Bracket',
+                'a_operating_locations': 'Operating Locations',
+                'a_logo': 'Upload Logo',
+                'a_brand_guidelines': 'Upload Brand Guidelines',
+                'a_sample_brochures': 'Upload Sample Brochures',
+                // Section B
+                'b_market_positioning': 'Market Positioning',
+                'b_ideal_customer': 'Ideal Customer',
+                'b_target_geographies': 'Target Geographies',
+                'b_target_age_group': 'Target Age Group',
+                'b_top_competitors': 'Top Competitors',
+                'b_differentiator': 'What Makes Your Business Different',
+                'b_short_term_goals': 'Short-term Business Goals',
+                'b_long_term_goals': 'Long-term Business Goals',
+                'b_kpis': 'Key KPIs',
+                // Section C
+                'c_branding_challenge': 'Branding Consistency Challenge',
+                'c_reach_challenge': 'Difficulty Reaching Target Audience',
+                'c_quality_challenge': 'Low Lead Quality Challenge',
+                'c_conversion_challenge': 'Poor Conversion Rates',
+                'c_content_delays': 'Face Content Creation Delays',
+                'c_approval_bottlenecks': 'Face Approval Bottlenecks',
+                'c_lack_resources': 'Lack Skilled Marketing Resources',
+                'c_workflow_issues': 'Workflow Issues',
+                'c_underperforming_channels': 'Underperforming Digital Channels',
+                'c_analytics_tools': 'Analytics Tools Used',
+                'c_lead_sources': 'Lead Generation Sources',
+                'c_monthly_leads': 'Monthly Inbound Leads',
+                'c_conversion_rate': 'Conversion Rate (%)',
+                'c_retention_challenges': 'Customer Retention Challenges',
+                // Section D
+                'd_agency': 'Currently Working with Agency',
+                'd_services': 'Outsourced Services',
+                'd_expectations': 'Expectations from Marketing Partner',
+                'd_website': 'Website URL',
+                'd_social_profiles': 'Social Media Profile Links',
+                'd_ad_accounts': 'Connected Ad Accounts',
+                'd_campaign_files': 'Past Campaign Files',
+                'd_creative_requirements': 'Recurring Creative Requirements',
+                'd_creative_volume': 'Monthly Creative Volume',
+                // Section E
+                'e_documented_strategy': 'Documented Marketing Strategy',
+                'e_sales_funnel': 'Sales Funnel',
+                'e_automation_level': 'Automation Level',
+                'e_branding_gaps': 'Branding Gaps',
+                'e_communication_gaps': 'Communication Gaps',
+                'e_digital_gaps': 'Digital Gaps',
+                'e_improvement_areas': 'Immediate Improvement Areas',
+                'e_addon_services': 'Interested in Add-on Services',
+                // Section F
+                'f_marketing_budget': 'Monthly Marketing Budget',
+                'f_creative_budget': 'Monthly Creative Budget',
+                'f_budget_flexibility': 'Budget Flexibility',
+                'f_billing_method': 'Preferred Billing Method',
+                'f_start_date': 'Expected Start Date',
+                'f_urgency_level': 'Urgency Level',
+                'f_decision_maker': 'Final Decision Maker',
+                'f_stakeholders': 'Other Stakeholders',
+                // Section G
+                'g_internal_notes': 'Internal Consultant Notes',
+                'g_qualification_score': 'Lead Qualification Score',
+                'g_next_actions': 'Next Actions'
+            };
+
+            const sections = {
+                'a': [],
+                'b': [],
+                'c': [],
+                'd': [],
+                'e': [],
+                'f': [],
+                'g': []
+            };
+
+            // Organize data by section
+            for (let [key, value] of Object.entries(data)) {
+                for (let section in sections) {
+                    if (key.startsWith(section + '_')) {
+                        sections[section].push({ key, value });
+                        break;
+                    }
+                }
+            }
+
+            // Generate review HTML
+            for (let section in sections) {
+                if (sections[section].length > 0) {
+                    const reviewSection = document.createElement('div');
+                    reviewSection.className = 'review-section';
+
+                    const title = document.createElement('div');
+                    title.className = 'review-section-title';
+                    title.innerText = sectionLabels[section];
+                    reviewSection.appendChild(title);
+
+                    sections[section].forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'review-item';
+
+                        let displayValue = item.value;
+                        if (Array.isArray(item.value)) {
+                            displayValue = item.value.join(', ');
+                        }
+
+                        const label = document.createElement('div');
+                        label.className = 'review-item-label';
+                        label.innerText = fieldLabels[item.key] || item.key;
+
+                        const value = document.createElement('div');
+                        value.className = 'review-item-value';
+                        value.innerText = displayValue || '—';
+
+                        itemDiv.appendChild(label);
+                        itemDiv.appendChild(value);
+                        reviewSection.appendChild(itemDiv);
+                    });
+
+                    reviewContent.appendChild(reviewSection);
+                }
+            }
+        }
+
+        function attachBackButtonListeners() {
+            // Handled by onclick attribute
+        }
+
+        // Initialize EmailJS (UPDATE WITH YOUR PUBLIC KEY)
+        emailjs.init("2BCO3fZVA5AaUVaYF");
+
+        // Form submission with EmailJS
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Collect all form data
+            const formData = new FormData(form);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
+                    data[key] = value;
+                }
+            }
+
+            // Prepare email data
+            const userEmail = data.a_email;
+            const companyName = data.a_company_name;
+            const contactPerson = data.a_contact_person;
+
+            // Create formatted data for email
+            const formattedData = formatDataForEmail(data);
+
+            // Send email to ADMIN
+            const adminEmailData = {
+                to_email: "YOUR_ADMIN_EMAIL@example.com", // UPDATE WITH YOUR EMAIL
+                to_name: "Admin",
+                company_name: companyName,
+                contact_person: contactPerson,
+                user_email: userEmail,
+                form_data: formattedData
+            };
+
+            // Send email to USER (thank you)
+            const userEmailData = {
+                to_email: userEmail,
+                to_name: contactPerson,
+                company_name: companyName,
+                form_data: formattedData
+            };
+
+            // Send both emails
+            Promise.all([
+                emailjs.send("service_qe0z7kt", "template_tdtwa24", adminEmailData),
+                emailjs.send("YOUR_SERVICE_ID", "template_7g5me3u", userEmailData)
+            ])
+            .then(function() {
+                document.getElementById('current-section-text').innerText = 'Form Submitted Successfully!';
+                alert('✓ Form submitted successfully!\n\n📧 Check your email for confirmation.\n\n👤 You: ' + userEmail + '\n\n👨‍💼 Admin: Notification sent');
+                form.reset();
+                currentSection = 0;
+                showSection(0);
+            })
+            .catch(function(error) {
+                console.error('EmailJS Error:', error);
+                alert('❌ Error sending emails.\n\nPlease ensure:\n1. EmailJS is properly configured\n2. Public Key is correct\n3. Email templates exist\n\nError: ' + error.text);
+            });
+        });
+
+        // Helper function to format data for email display
+        function formatDataForEmail(data) {
+            let formatted = '';
+            
+            const sectionLabels = {
+                'a': 'Section A: Client Company Profile',
+                'b': 'Section B: Understanding The Client Business',
+                'c': 'Section C: Client Pain Point Diagnosis',
+                'd': 'Section D: Current Marketing & Creative Engagement',
+                'e': 'Section E: Engagement Opportunities',
+                'f': 'Section F: Budget, Timeline & Decision-Making',
+                'g': 'Section G: Internal Notes & Follow-up'
+            };
+
+            for (let section in sectionLabels) {
+                formatted += '\n\n' + sectionLabels[section] + '\n' + '='.repeat(50) + '\n';
+                
+                for (let [key, value] of Object.entries(data)) {
+                    if (key.startsWith(section + '_')) {
+                        let displayKey = key.replace(section + '_', '').replace(/_/g, ' ').toUpperCase();
+                        let displayValue = Array.isArray(value) ? value.join(', ') : value;
+                        formatted += displayKey + ': ' + displayValue + '\n';
+                    }
+                }
+            }
+            
+            return formatted;
+        }
+    </script>
+</body>
+</html>

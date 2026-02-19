@@ -1,0 +1,34 @@
+
+<head>
+    <style>
+        /* Hide both images by default */
+        .desktop-banner,
+        .mobile-banner {
+            width: 100%;
+            display: none;
+        }
+
+        /* Show desktop image for screens 768px and above */
+        @media (min-width: 768px) {
+            .desktop-banner {
+                display: block;
+            }
+        }
+
+        /* Show mobile image for screens below 768px */
+        @media (max-width: 767px) {
+            .mobile-banner {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Desktop Banner -->
+    <img src="DESKTOP-BANNER.png" alt="Desktop Banner" class="desktop-banner">
+
+    <!-- Mobile Banner -->
+    <img src="MOBILE-BANNER.png" alt="Mobile Banner" class="mobile-banner">
+
+</body>
